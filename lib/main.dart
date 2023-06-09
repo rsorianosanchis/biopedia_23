@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:biopedia/config/theme/app_theme.dart';
 import 'package:biopedia/config/router/app_router.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+Future<void> main() async{    // Hemos cambiado este main a Future/async para la dependencia variables de entorno
+  await dotenv.load(fileName: ".env");
   runApp(const MainApp());
 }
 
