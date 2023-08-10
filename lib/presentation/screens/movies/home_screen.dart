@@ -1,6 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:biopedia_23/presentation/providers/movies/movies_providers.dart';
+import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -32,7 +33,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
+    // final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
+    final nowPlayingMovies = ref.watch(moviesSlideShowProvider); // usamos este provider que limita el numero de peliculas
 
     if (nowPlayingMovies.isEmpty) const CircularProgressIndicator();
     return Column(
