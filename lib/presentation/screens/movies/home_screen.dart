@@ -1,6 +1,7 @@
-import 'package:biopedia_23/presentation/providers/movies/movies_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:biopedia_23/presentation/providers/movies/movies_providers.dart';
+import '../../widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String name = 'home-screen';
@@ -34,11 +35,11 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
 
     if (nowPlayingMovies.isEmpty) const CircularProgressIndicator();
-    return ListView.builder(
-      itemCount: nowPlayingMovies.length,
-      itemBuilder: (context, index) {
-        return ListTile(title: Text(nowPlayingMovies[index].title));
-      },
+    return Column(
+      children: [
+        const CustomAppbar(),
+        MoviesSlideshow(movies: nowPlayingMovies)
+      ],
     );
   }
 }
