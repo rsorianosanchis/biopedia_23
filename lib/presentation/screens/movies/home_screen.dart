@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/providers.dart';
@@ -11,7 +10,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: _HomeView());
+    return const Scaffold(
+      body: _HomeView(),
+      bottomNavigationBar: CustomBottomNavigationBar(),
+    );
   }
 }
 
@@ -33,14 +35,24 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    // final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
-    final nowPlayingMovies = ref.watch(moviesSlideShowProvider); // usamos este provider que limita el numero de peliculas
+    final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
+    final nowPlayingMoviesSlideShow = ref.watch(
+        moviesSlideShowProvider); // usamos este provider que limita el numero de peliculas
 
-    if (nowPlayingMovies.isEmpty) const CircularProgressIndicator();
+    if (nowPlayingMoviesSlideShow.isEmpty) const CircularProgressIndicator();
     return Column(
       children: [
         const CustomAppbar(),
-        MoviesSlideshow(movies: nowPlayingMovies)
+        MoviesSlideshow(movies: nowPlayingMoviesSlideShow),
+        MoviesHorizontalListview(
+            movies: nowPlayingMovies,
+            title: 'Now on Cinema',
+            subTitle: 'Monday 20th',
+            loadNextpage: () {
+              
+              print('Llamada pelisss');
+              ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();//usamos el read porque estamos dentro de na funcion o callbak
+            })
       ],
     );
   }

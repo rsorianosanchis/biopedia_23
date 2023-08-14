@@ -21,6 +21,7 @@ class MoviesSlideshow extends StatelessWidget {
         itemCount: movies.length,
         viewportFraction: 0.8,
         scale: 0.8,
+        autoplay: true,
         pagination: SwiperPagination(
           margin:const EdgeInsets.only(top: 0),
           
