@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:biopedia_23/config/helpers/human_formats.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../domain/entities/movie.dart';
 
@@ -52,19 +53,21 @@ class _MoviesHorizontalListviewState extends State<MoviesHorizontalListview> {
       child: Column(
         children: [
           if (widget.title != null || widget.subTitle != null)
-            _Title(
-              title: widget.title,
-              subTitle: widget.subTitle,
+            FadeInLeft(
+              child: _Title(
+                title: widget.title,
+                subTitle: widget.subTitle,
+              ),
             ),
           Expanded(
-              child: ListView.builder(
-            controller: scrollController,
-            itemCount: widget.movies.length,
-            scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              return _Slide(movie: widget.movies[index]);
-            },
+            child: ListView.builder(
+              controller: scrollController,
+              itemCount: widget.movies.length,
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) {
+                return FadeInRight(child: _Slide(movie: widget.movies[index]));
+              },
           ))
         ],
       ),
@@ -129,7 +132,10 @@ class _Slide extends StatelessWidget {
                     ));
                   }
                   // return CircularProgressIndicator(strokeWidth: 2,);
-                  return FadeIn(child: child);
+                  return GestureDetector(
+                    onTap: ()=> context.push('/movie/${movie.id}'),
+                    child: FadeIn(child: child)
+                  );
                 },
               ),
             ),

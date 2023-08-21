@@ -38,71 +38,72 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final nowPlayingMoviesSlideShow = ref.watch(moviesSlideShowProvider); // usamos este provider que limita el numero de peliculas
+    final initialLoading = ref.watch(initialLoadingProvider);
+
+    if(initialLoading)return const FullScreenLoader();
+
+    final nowPlayingMoviesSlideShow = ref.watch(
+        moviesSlideShowProvider); // usamos este provider que limita el numero de peliculas
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
     final upComingMovies = ref.watch(upComingMoviesProvider);
     final popularMovies = ref.watch(popularMoviesProvider);
     final topRatedMovies = ref.watch(topRatedMoviesProvider);
 
-    if (nowPlayingMoviesSlideShow.isEmpty) const CircularProgressIndicator();
+    //if (nowPlayingMoviesSlideShow.isEmpty) const FullScreenLoader();
+
     return CustomScrollView(slivers: [
       const SliverAppBar(
         floating: true,
-        flexibleSpace:FlexibleSpaceBar(
+        flexibleSpace: FlexibleSpaceBar(
           title: CustomAppbar(),
         ),
-        
       ),
       SliverList(
-        delegate: SliverChildBuilderDelegate((context, index) {
-          return Column(
-            children: [
-              // const CustomAppbar(),
-              MoviesSlideshow(movies: nowPlayingMoviesSlideShow),
-              MoviesHorizontalListview(
-                  movies: nowPlayingMovies,
-                  title: 'Now on Cinema',
-                  subTitle: 'Monday 20th',
-                  loadNextpage: () {
-                    
-                    ref
-                        .read(nowPlayingMoviesProvider.notifier)
-                        .loadNextPage(); //usamos el read porque estamos dentro de na funcion o callbak
-                  }),
+          delegate: SliverChildBuilderDelegate((context, index) {
+        return Column(
+          children: [
+            // const CustomAppbar(),
+            MoviesSlideshow(movies: nowPlayingMoviesSlideShow),
+            //
+            MoviesHorizontalListview(
+                movies: nowPlayingMovies,
+                title: 'Now on Cinema',
+                subTitle: 'Monday 20th',
+                loadNextpage: () {
+                  ref
+                      .read(nowPlayingMoviesProvider.notifier)
+                      .loadNextPage(); //usamos el read porque estamos dentro de na funcion o callbak
+                }),
 
-              (upComingMovies.isNotEmpty)?MoviesHorizontalListview(
-                  movies: upComingMovies,
-                  title: 'Soon',
-                  subTitle: 'This month',
-                  loadNextpage: () {
-                    
-                    ref
-                        .read(upComingMoviesProvider.notifier)
-                        .loadNextPage(); //usamos el read porque estamos dentro de na funcion o callbak
-                  }):const CircularProgressIndicator(),
+            MoviesHorizontalListview(
+                movies: upComingMovies,
+                title: 'Soon',
+                subTitle: 'This month',
+                loadNextpage: () {
+                  ref
+                      .read(upComingMoviesProvider.notifier)
+                      .loadNextPage(); //usamos el read porque estamos dentro de na funcion o callbak
+                }),
 
-              MoviesHorizontalListview(
-                  movies: popularMovies,
-                  title: 'Popular',
-                  //subTitle: 'This month',
-                  loadNextpage: () {
-                    
-                    ref
-                        .read(popularMoviesProvider.notifier)
-                        .loadNextPage(); //usamos el read porque estamos dentro de na funcion o callbak
-                  }),
+            MoviesHorizontalListview(
+                movies: popularMovies,
+                title: 'Popular',
+                //subTitle: 'This month',
+                loadNextpage: () {
+                  ref
+                      .read(popularMoviesProvider.notifier)
+                      .loadNextPage(); //usamos el read porque estamos dentro de na funcion o callbak
+                }),
 
-              MoviesHorizontalListview(
-                  movies: topRatedMovies,
-                  title: 'Best ever',
-                  subTitle: 'Best qualifications',
-                  loadNextpage: () {
-                  
-                    ref
-                        .read(topRatedMoviesProvider.notifier)
-                        .loadNextPage(); //usamos el read porque estamos dentro de na funcion o callbak
-              }
-            )
+            MoviesHorizontalListview(
+                movies: topRatedMovies,
+                title: 'Best ever',
+                subTitle: 'Best qualifications',
+                loadNextpage: () {
+                  ref
+                      .read(topRatedMoviesProvider.notifier)
+                      .loadNextPage(); //usamos el read porque estamos dentro de na funcion o callbak
+                })
           ],
         );
       }, childCount: 1))
