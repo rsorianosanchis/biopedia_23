@@ -1,6 +1,9 @@
 import 'package:biopedia_23/config/constants/environment.dart';
 import 'package:biopedia_23/domain/datasources/movies_datasource.dart';
+import 'package:biopedia_23/domain/entities/actor.dart';
 import 'package:biopedia_23/domain/entities/movie.dart';
+import 'package:biopedia_23/infrastucture/mappers/actor_mapper.dart';
+import 'package:biopedia_23/infrastucture/models/moviedb_credits_response.dart';
 import 'package:biopedia_23/infrastucture/models/moviedb_movie_details_response.dart';
 import 'package:biopedia_23/infrastucture/models/moviedb_response.dart';
 import 'package:dio/dio.dart';
@@ -73,20 +76,31 @@ class MovieDbDatsourceImpl extends MoviesDatasource {
 
     return movies;
   }
-  
+
   @override
-
-  Future<Movie> getMovieDetailsById(String movieId) async{
-
+  Future<Movie> getMovieDetailsById(String movieId) async {
     final response = await dio.get('/movie/$movieId');
 
-    if (response.statusCode != 200) throw Exception('Movie with id: $movieId not found');
+    if (response.statusCode != 200)
+      throw Exception('Movie with id: $movieId not found');
 
     final movieDbResponse = MovieDbMovieDetailsResponse.fromJson(response.data);
 
-    final Movie movie =  MovieMapper.movieDbMovieDetailsToEntity(movieDbResponse);
+    final Movie movie =
+        MovieMapper.movieDbMovieDetailsToEntity(movieDbResponse);
 
     return movie;
   }
 
+  @override
+  Future<List<Actor>> getActorsByMovieId(String movieId) async {
+    final response = await dio.get('/movie/$movieId/credits');
+
+    final movieDbresponse = MovieDbCreditsResponse.fromJson(response.data);
+
+    final List<Actor> actors = movieDbresponse.cast
+        .map((e) => ActorMapper.moviedDbToActorEntity(e))
+        .toList();
+    return actors;
+  }
 }

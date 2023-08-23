@@ -22,7 +22,7 @@ final movieInfoProvider =
   }
 
 */
-typedef GetMovieCallBack = Future<Movie> Function(String id);
+typedef GetMovieCallBack = Future<Movie> Function(String id);//todo: tambien aqui tiene que ser posicional
 //
 //
 
@@ -36,6 +36,8 @@ class MovieMapNotifier extends StateNotifier<Map<String, Movie>> {
     print('doing http request');
 
     final movie = await getMovie(movieId);
+
     state = {...state, movieId: movie};
+
   }
 }
