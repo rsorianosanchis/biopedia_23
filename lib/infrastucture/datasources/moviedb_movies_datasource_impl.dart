@@ -1,16 +1,13 @@
 import 'package:biopedia_23/config/constants/environment.dart';
-import 'package:biopedia_23/domain/datasources/movies_datasource.dart';
-import 'package:biopedia_23/domain/entities/actor.dart';
+import 'package:biopedia_23/domain/datasources/movies_datasource.dart'; 
 import 'package:biopedia_23/domain/entities/movie.dart';
-import 'package:biopedia_23/infrastucture/mappers/actor_mapper.dart';
-import 'package:biopedia_23/infrastucture/models/moviedb_credits_response.dart';
 import 'package:biopedia_23/infrastucture/models/moviedb_movie_details_response.dart';
 import 'package:biopedia_23/infrastucture/models/moviedb_response.dart';
 import 'package:dio/dio.dart';
 
 import '../mappers/movie_mapper.dart';
 
-class MovieDbDatsourceImpl extends MoviesDatasource {
+class MovieDbMoviesDatasourceImpl extends MoviesDatasource {
   final dio = Dio(
       BaseOptions(baseUrl: 'https://api.themoviedb.org/3', queryParameters: {
     'api_key': Environment.theMovieDbKey,
@@ -92,15 +89,4 @@ class MovieDbDatsourceImpl extends MoviesDatasource {
     return movie;
   }
 
-  @override
-  Future<List<Actor>> getActorsByMovieId(String movieId) async {
-    final response = await dio.get('/movie/$movieId/credits');
-
-    final movieDbresponse = MovieDbCreditsResponse.fromJson(response.data);
-
-    final List<Actor> actors = movieDbresponse.cast
-        .map((e) => ActorMapper.moviedDbToActorEntity(e))
-        .toList();
-    return actors;
-  }
 }

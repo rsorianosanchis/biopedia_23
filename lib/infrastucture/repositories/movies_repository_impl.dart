@@ -1,5 +1,5 @@
 import 'package:biopedia_23/domain/datasources/movies_datasource.dart';
-import 'package:biopedia_23/domain/entities/actor.dart';
+
 import 'package:biopedia_23/domain/entities/movie.dart';
 import 'package:biopedia_23/domain/repositories/movies_repository.dart';
 
@@ -34,8 +34,5 @@ class MoviesRepositoryImpl extends MoviesRespository {
     return datasource.getMovieDetailsById(movieId);
   }
 
-  @override
-  Future<List<Actor>> getActorsByMovieId(String movieId) {
-    return datasource.getActorsByMovieId(movieId);
-  }
+  
 }

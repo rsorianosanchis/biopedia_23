@@ -23,7 +23,7 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
     super.initState();
     ref.read(movieInfoProvider.notifier).loadMovie(widget.movieId);
     ref
-        .read(movieActorsCreditsProvider.notifier)
+        .read(creditsProvider.notifier)
         .loadActors(movieId: widget.movieId);
   }
 
@@ -32,7 +32,7 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
     // final movieDetailsProvider = ref.watch(movieInfoProvider);
     final Movie? movie = ref.watch(movieInfoProvider)[widget.movieId];
     final Map<String, List<Actor>> actors =
-        ref.watch(movieActorsCreditsProvider);
+        ref.watch(creditsProvider);
 
     if (movie == null)return const Scaffold(body: Center(child: CircularProgressIndicator()));
 

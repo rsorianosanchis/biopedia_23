@@ -1,4 +1,3 @@
-import '../entities/actor.dart';
 import '../entities/movie.dart';
 
 abstract class MoviesDatasource {
@@ -7,5 +6,5 @@ abstract class MoviesDatasource {
   Future<List<Movie>> getPopular({int page = 1});
   Future<List<Movie>> getTopRated({int page = 1});
   Future<Movie> getMovieDetailsById(String movieId);
-  Future<List<Actor>> getActorsByMovieId(String movieId);
+  
 }

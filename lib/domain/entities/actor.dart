@@ -19,15 +19,15 @@ class Actor {
         required this.adult,
         required this.gender,
         required this.id,
-        this.knownForDepartment,
+        required this.knownForDepartment,
         required this.name,
         required this.originalName,
         required this.popularity,
         required this.profilePath,
-        this.castId,
-        this.character,
+        required this.castId,
+        required this.character,
         required this.creditId,
-        this.order,
+        required this.order,
        
     });
 }

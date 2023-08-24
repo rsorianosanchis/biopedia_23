@@ -7,10 +7,10 @@
 
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:biopedia_23/infrastucture/datasources/moviedb_datasource_impl.dart';
 import 'package:biopedia_23/infrastucture/repositories/movies_repository_impl.dart';
+import '../../../infrastucture/datasources/moviedb_movies_datasource_impl.dart';
 // Provider del tipo solo lectura, es inmutable
 // Es solo proveedor de informacion
 final moviesRepositoryProvider = Provider((ref) {
-  return MoviesRepositoryImpl(MovieDbDatsourceImpl());
+  return MoviesRepositoryImpl(MovieDbMoviesDatasourceImpl());
 });

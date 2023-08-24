@@ -1,10 +1,8 @@
-import 'dart:ffi';
-
 import 'package:biopedia_23/presentation/providers/credits/credits_repository_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/entities/actor.dart';
 
-final movieActorsCreditsProvider =
+final creditsProvider =
     StateNotifierProvider<ActorsNotifier, Map<String, List<Actor>>>((ref) {
   final getActorsByMovieID = ref
       .watch(creditsRepositoryProvider)
