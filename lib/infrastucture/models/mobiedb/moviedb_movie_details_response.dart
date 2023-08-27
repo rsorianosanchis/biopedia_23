@@ -119,13 +119,13 @@ class MovieDbMovieDetailsResponse {
 class BelongsToCollection {
     final int id;
     final String name;
-    final String posterPath;
+    final String ? posterPath;
     final dynamic backdropPath;
 
     BelongsToCollection({
         required this.id,
         required this.name,
-        required this.posterPath,
+        this.posterPath,
         required this.backdropPath,
     });
 

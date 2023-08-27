@@ -1,8 +1,9 @@
 // Aqui vamos a leer el modelo movie de la API y los vamos a convertir a nuestro modelo de negocio entity Movie
-import 'package:biopedia_23/infrastucture/models/moviedb_movie_details_response.dart';
 
 import '../../domain/entities/movie.dart';
-import '../models/movie_moviedb.dart';
+import '../models/mobiedb/movie_moviedb.dart';
+import '../models/mobiedb/moviedb_movie_details_response.dart';
+
 
 class MovieMapper {
 

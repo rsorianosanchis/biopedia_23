@@ -1,11 +1,11 @@
 import 'package:biopedia_23/config/constants/environment.dart';
 import 'package:biopedia_23/domain/datasources/movies_datasource.dart'; 
 import 'package:biopedia_23/domain/entities/movie.dart';
-import 'package:biopedia_23/infrastucture/models/moviedb_movie_details_response.dart';
-import 'package:biopedia_23/infrastucture/models/moviedb_response.dart';
 import 'package:dio/dio.dart';
 
 import '../mappers/movie_mapper.dart';
+import '../models/mobiedb/moviedb_movie_details_response.dart';
+import '../models/mobiedb/moviedb_response.dart';
 
 class MovieDbMoviesDatasourceImpl extends MoviesDatasource {
   final dio = Dio(
@@ -78,8 +78,7 @@ class MovieDbMoviesDatasourceImpl extends MoviesDatasource {
   Future<Movie> getMovieDetailsById(String movieId) async {
     final response = await dio.get('/movie/$movieId');
 
-    if (response.statusCode != 200)
-      throw Exception('Movie with id: $movieId not found');
+    if (response.statusCode != 200)throw Exception('Movie with id: $movieId not found');
 
     final movieDbResponse = MovieDbMovieDetailsResponse.fromJson(response.data);
 

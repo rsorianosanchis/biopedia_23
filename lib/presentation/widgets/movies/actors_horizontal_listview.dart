@@ -13,19 +13,15 @@ class ActorsHorizontalListview extends StatelessWidget {
       height: 370,
       child: (actors == null)?const SizedBox():
       
-      Column(
-        children: [
-          Expanded(
-              child: ListView.builder(
-           
+      Expanded(
+          child: ListView.builder( 
             itemCount: actors!.length,
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               return FadeInRight(child: _Slide(actor: actors![index]));
             },
-          ))
-        ],
+          )
       ),
     );
   }
@@ -42,11 +38,11 @@ class _Slide extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
+        
         children: [
           // IMAGE *
           SizedBox(
+            
             width: 150,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
@@ -72,18 +68,14 @@ class _Slide extends StatelessWidget {
             height: 5,
           ),
           // TITLE
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 150,
-                child: Text(
-                  actor.name,
-                  maxLines: 2,
-                  style: textStyles.titleSmall,
-                ),
-              ),
-            ],
+          SizedBox(
+            width: 150,
+            child: Text(
+              actor.name,
+              maxLines: 2,
+              style: textStyles.titleSmall,
+              textAlign: TextAlign.center,
+            ),
           ),
           //RATES
         ],
