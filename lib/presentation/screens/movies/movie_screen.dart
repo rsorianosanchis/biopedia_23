@@ -1,11 +1,10 @@
-import 'package:biopedia_23/presentation/providers/credits/credits_providers.dart';
-import 'package:biopedia_23/presentation/providers/movies/movie_info_provider.dart';
+
 import 'package:biopedia_23/presentation/widgets/movies/actors_horizontal_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../domain/entities/actor.dart';
 import '../../../domain/entities/movie.dart';
+import '../../providers/providers.dart';
 
 class MovieScreen extends ConsumerStatefulWidget {
   static const name = 'movie-screen';
@@ -22,17 +21,14 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
   void initState() {
     super.initState();
     ref.read(movieInfoProvider.notifier).loadMovie(widget.movieId);
-    ref
-        .read(creditsProvider.notifier)
-        .loadActors(movieId: widget.movieId);
+    ref.read(actorsByMovieIdProvider.notifier).loadActors(movieId: widget.movieId);
   }
 
   @override
   Widget build(BuildContext context) {
     // final movieDetailsProvider = ref.watch(movieInfoProvider);
     final Movie? movie = ref.watch(movieInfoProvider)[widget.movieId];
-    final Map<String, List<Actor>> actors =
-        ref.watch(creditsProvider);
+    final Map<String, List<Actor>> actors = ref.watch(actorsByMovieIdProvider);
 
     if (movie == null)return const Scaffold(body: Center(child: CircularProgressIndicator()));
 
@@ -82,7 +78,7 @@ class _MovieDetails extends StatelessWidget {
               width: 15,
             ),
             Expanded(
-                child: Column(
+              child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(movie.title, style: textStyles.titleLarge),

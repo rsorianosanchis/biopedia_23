@@ -13,15 +13,19 @@ class ActorsHorizontalListview extends StatelessWidget {
       height: 370,
       child: (actors == null)?const SizedBox():
       
-      Expanded(
-          child: ListView.builder( 
-            itemCount: actors!.length,
-            scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              return FadeInRight(child: _Slide(actor: actors![index]));
-            },
-          )
+      Column(
+        children: [
+          Expanded(
+              child: ListView.builder( 
+                itemCount: actors!.length,
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return FadeInRight(child: _Slide(actor: actors![index]));
+                },
+              )
+          ),
+        ],
       ),
     );
   }
